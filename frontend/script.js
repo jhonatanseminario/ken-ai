@@ -8,7 +8,7 @@ formulario.addEventListener('submit', async(event) => {
     const nombre = input.value.trim();
   
     if (!nombre) {
-        console.warn('Debes ingresar tu nombre.');
+        console.warn('El campo "nombre" es requerido y no puede estar vacío.');
         return;
     }
 
@@ -20,7 +20,8 @@ formulario.addEventListener('submit', async(event) => {
         });
   
         if (!response.ok) {
-            console.error('Algo salió mal. Inténtalo de nuevo.');
+            const errorData = await response.json();
+            console.error(`Error en el servidor: ${errorData.error}`);
             return;
         }
 
@@ -28,6 +29,6 @@ formulario.addEventListener('submit', async(event) => {
         bienvenida.textContent = data.bienvenida;
       
     } catch (error) {
-        console.error(`Error de conexión: ${error}`);
+        console.error(`No se pudo establecer la conexión con el servidor: ${error}`);
     }
 });
