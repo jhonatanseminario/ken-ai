@@ -2,8 +2,9 @@ module.exports.handler = async(event) => {
     try {
         if (event.httpMethod !== 'POST') {
             return {
-            statusCode: 405,
-            body: JSON.stringify({ error: 'Método no permitido, utiliza POST.' })
+                statusCode: 405,
+                headers: { "Allow": "POST" },
+                body: JSON.stringify({ error: 'Método no permitido, utiliza POST.' })
             }
         }
 
@@ -11,8 +12,8 @@ module.exports.handler = async(event) => {
 
         if (!nombre || nombre.trim() === "") {
             return {
-            statusCode: 400,
-            body: JSON.stringify({ error: 'El campo "nombre" es requerido y no puede estar vacío.' })
+                statusCode: 400,
+                body: JSON.stringify({ error: 'El campo "nombre" es requerido y no puede estar vacío.' })
             }
         }
 
