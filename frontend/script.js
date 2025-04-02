@@ -1,42 +1,60 @@
-const bienvenida = document.getElementById('bienvenida');
-const formulario = document.getElementById('formulario');
-const input = document.getElementById('nombre');
+//*==========================================================================*//
+//*                     INICIALIZAR CONSTANTES GLOBALES                      *//
+//*==========================================================================*//
 
-formulario.addEventListener('submit', async(event) => {
-    event.preventDefault();
+const chatArea = document.querySelector('#chat-area');
+const userMessageInput = document.querySelector('#user-message-input');
 
-    const nombre = input.value.trim();
-  
-    if (!nombre) {
-        console.warn('El campo "nombre" es requerido y no puede estar vacío.');
-        return;
-    }
+let chatHistory = [];
+
+
+//*==========================================================================*//
+//*                       MANEJAR ENTRADA DEL USUARIO                        *//
+//*==========================================================================*//
+
+userMessageInput.addEventListener('keydown', async event => {
+    if (event.key === 'Enter') {
+        const userMessage = userMessageInput.value.trim();
     
-    const response = await realizarSolicitud(nombre);
-    
-    if (response) {
-        bienvenida.textContent = response;
+        if (!userMessage) return;
+        
+        const data = await fetchServerResponse(userMessage, chatHistory);
+        
+        if (data) {
+            chatArea.textContent = data.contents;
+            chatHistory = data.chatHistory;
+        }
     }
 });
 
-async function realizarSolicitud(nombre) {
+
+//*==========================================================================*//
+//*                      REALIZAR SOLICITUD AL BACKEND                       *//
+//*==========================================================================*//
+
+async function fetchServerResponse(userMessage, chatHistory) {
     try {
         const response = await fetch('/.netlify/functions/index', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nombre })
+            body: JSON.stringify({ userMessage, chatHistory }),
         });
 
         if (!response.ok) {
             const errorData = await response.json();
-            console.error(`Error en el servidor: ${errorData.error}`);
+
+            console.error(`El servidor ha devuelto un error.\n\n` +
+                `Message: ${errorData.error}\n` +
+                `Status: [${response.status}] ${response.statusText}\n\n`
+            );
+
             return;
         }
 
         const data = await response.json();
-        return data.bienvenida;
+        return data;
     
     } catch (error) {
-        console.error(`No se pudo establecer la conexión con el servidor: ${error}`);
+        console.error(`No se pudo establecer la conexión con el servidor.\n\n${error}\n\n`);
     }
 }
