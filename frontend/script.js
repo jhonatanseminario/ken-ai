@@ -1,18 +1,13 @@
-//*==========================================================================*//
-//*                     INICIALIZAR CONSTANTES GLOBALES                      *//
-//*==========================================================================*//
-
 const chatArea = document.querySelector('#chat-area');
 const userMessageInput = document.querySelector('#user-message-input');
 
 let chatHistory = [];
 
+userMessageInput.addEventListener('keydown', processUserMessage);
 
-//*==========================================================================*//
-//*                       MANEJAR ENTRADA DEL USUARIO                        *//
-//*==========================================================================*//
 
-userMessageInput.addEventListener('keydown', async event => {
+async function processUserMessage (event) {
+
     if (event.key === 'Enter') {
         const userMessage = userMessageInput.value.trim();
     
@@ -21,18 +16,19 @@ userMessageInput.addEventListener('keydown', async event => {
         const data = await fetchServerResponse(userMessage, chatHistory);
         
         if (data) {
-            chatArea.textContent = data.contents;
+            updateChatArea(data);
             chatHistory = data.chatHistory;
         }
     }
-});
+}
 
 
-//*==========================================================================*//
-//*                      REALIZAR SOLICITUD AL BACKEND                       *//
-//*==========================================================================*//
+function updateChatArea (data) {
+    chatArea.textContent = data.contents;
+}
 
-async function fetchServerResponse(userMessage, chatHistory) {
+
+async function fetchServerResponse (userMessage, chatHistory) {
     try {
         const response = await fetch('/.netlify/functions/index', {
             method: 'POST',
@@ -43,7 +39,7 @@ async function fetchServerResponse(userMessage, chatHistory) {
         if (!response.ok) {
             const errorData = await response.json();
 
-            console.error(`El servidor ha devuelto un error.\n\n` +
+            console.error(`The server returned an error.\n\n` +
                 `Message: ${errorData.error}\n` +
                 `Status: [${response.status}] ${response.statusText}\n\n`
             );
@@ -55,6 +51,6 @@ async function fetchServerResponse(userMessage, chatHistory) {
         return data;
     
     } catch (error) {
-        console.error(`No se pudo establecer la conexión con el servidor.\n\n${error}\n\n`);
+        console.error(`Unable to connect to the server."\n\n${error}\n\n`);
     }
 }

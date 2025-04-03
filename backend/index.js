@@ -1,7 +1,3 @@
-//*==========================================================================*//
-//*                  MANEJADOR DE SOLICITUDES DEL FRONTEND                   *//
-//*==========================================================================*//
-
 module.exports.handler = async event => {
     try {
         const validationResult = validateRequest(event);
@@ -18,10 +14,6 @@ module.exports.handler = async event => {
     }
 }
 
-
-//*==========================================================================*//
-//*                       EVALUAR DISTINTOS ESCENARIOS                       *//
-//*==========================================================================*//
 
 function validateRequest (event) { 
     if (event.httpMethod !== 'POST') {
@@ -49,10 +41,6 @@ function validateRequest (event) {
     }
 }
 
-
-//*==========================================================================*//
-//*                         ACCEDER A LA API DEL LLM                         *//
-//*==========================================================================*//
 
 async function fetchApiResponse (event) {
     const apiUrl = process.env.API_URL;
@@ -85,6 +73,7 @@ async function fetchApiResponse (event) {
         body: JSON.stringify({ contents: modelMessage, chatHistory }),
     }
 }
+
 
 function updateChatHistory (chatHistory, role, message) {
     chatHistory.push({
