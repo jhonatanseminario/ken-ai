@@ -8,7 +8,9 @@ userMessageInput.addEventListener('keydown', processUserMessage);
 
 async function processUserMessage (event) {
 
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter') {  
+        event.preventDefault();
+
         const userMessage = userMessageInput.value.trim();
     
         if (!userMessage) return;
