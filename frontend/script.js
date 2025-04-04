@@ -11,9 +11,11 @@ async function processUserMessage (event) {
     if (event.key === 'Enter') {  
         event.preventDefault();
 
-        const userMessage = userMessageInput.value.trim();
+        let userMessage = userMessageInput.value.trim();
     
         if (!userMessage) return;
+
+        userMessage = userMessage.replace(/\n/g, '<br>');
 
         const userMessageBubble = document.createElement('div');
         
@@ -67,6 +69,6 @@ async function fetchServerResponse (userMessage, chatHistory) {
         return data;
     
     } catch (error) {
-        console.error(`Unable to connect to the server."\n\n${error}\n\n`);
+        console.error(`Unable to connect to the server.\n\n${error}\n\n`);
     }
 }
