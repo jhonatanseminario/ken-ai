@@ -12,6 +12,15 @@ async function processUserMessage (event) {
         const userMessage = userMessageInput.value.trim();
     
         if (!userMessage) return;
+
+        const userMessageBubble = document.createElement('div');
+        
+        userMessageBubble.classList.add('user-message-bubble');
+        userMessageBubble.innerHTML = marked.parse(userMessage);
+
+        chatArea.appendChild(userMessageBubble);
+
+        userMessageInput.value = '';
         
         const data = await fetchServerResponse(userMessage, chatHistory);
         
@@ -24,7 +33,12 @@ async function processUserMessage (event) {
 
 
 function updateChatArea (data) {
-    chatArea.innerHTML = marked.parse(data.contents);
+    const modelMessageBubble = document.createElement('div');
+        
+    modelMessageBubble.classList.add('model-message-bubble');
+    modelMessageBubble.innerHTML = marked.parse(data.contents);
+
+    chatArea.appendChild(modelMessageBubble);
 }
 
 
