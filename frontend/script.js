@@ -8,29 +8,41 @@ userMessageInput.addEventListener('keydown', processUserMessage);
 
 async function processUserMessage (event) {
 
-    if (event.key === 'Enter') {  
-        event.preventDefault();
+    if (event.key === 'Enter') {
 
-        let userMessage = userMessageInput.value.trim();
-    
-        if (!userMessage) return;
+        if (event.shiftKey) {
+            event.preventDefault();
 
-        userMessage = userMessage.replace(/\n/g, '<br>');
+            const cursorPosition = userMessageInput.selectionStart;
+            const currentValue = userMessageInput.value;
 
-        const userMessageBubble = document.createElement('div');
+            userMessageInput.value = currentValue.slice(0, cursorPosition) + "\n" + currentValue.slice(cursorPosition);
+            userMessageInput.selectionStart = userMessageInput.selectionEnd = cursorPosition + 1;
+
+        } else {
+            event.preventDefault();
+
+            let userMessage = userMessageInput.value.trim();
         
-        userMessageBubble.classList.add('user-message-bubble');
-        userMessageBubble.innerHTML = marked.parse(userMessage);
+            if (!userMessage) return;
 
-        chatArea.appendChild(userMessageBubble);
+            userMessage = userMessage.replace(/\n/g, '<br>');
 
-        userMessageInput.value = '';
-        
-        const data = await fetchServerResponse(userMessage, chatHistory);
-        
-        if (data) {
-            updateChatArea(data);
-            chatHistory = data.chatHistory;
+            const userMessageBubble = document.createElement('div');
+            
+            userMessageBubble.classList.add('user-message-bubble');
+            userMessageBubble.innerHTML = marked.parse(userMessage);
+
+            chatArea.appendChild(userMessageBubble);
+
+            userMessageInput.value = '';
+            
+            const data = await fetchServerResponse(userMessage, chatHistory);
+            
+            if (data) {
+                updateChatArea(data);
+                chatHistory = data.chatHistory;
+            }
         }
     }
 }
