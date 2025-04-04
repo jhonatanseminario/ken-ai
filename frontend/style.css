@@ -19,6 +19,12 @@ body {
     }
 }
 
+.chat-area {
+    margin-inline: auto;
+    max-width: 800px;
+    padding: 24px;
+}
+
 .message-input {
     border: 1px solid rgb(232, 232, 232);
     border-radius: 24px;
@@ -41,6 +47,7 @@ body {
     scrollbar-width: thin;
     transition: border 0.3s ease;
     width: 800px;
+    z-index: 20;
 
     &:hover {
         border: 1px solid rgb(208, 208, 208);
@@ -54,4 +61,16 @@ body {
     &::placeholder {
         font-family: inherit;
     }
+}
+
+.hidden-bottom {
+    background: rgb(248 248 248);
+    bottom: 0px;
+    height: 48px;
+    left: 0;
+    margin-inline: auto;
+    position: fixed;
+    right: 0;
+    width: 800px;
+    z-index: 10;
 }
