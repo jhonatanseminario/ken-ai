@@ -24,7 +24,7 @@ async function processUserMessage (event) {
 
 
 function updateChatArea (data) {
-    chatArea.textContent = data.contents;
+    chatArea.innerHTML = marked.parse(data.contents);
 }
 
 

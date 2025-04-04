@@ -3,26 +3,36 @@
 }
 
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
 body {
     background-color: rgb(248, 248, 248);
-    color: rgb(12, 12, 12);
+    color: rgb(48, 48, 48);
     font-family: var(--font-sans);
     line-height: 24px;
+    margin: 0;
+    padding: 0;
 
     &::selection {
         background-color: rgb(200, 215, 235);
     }
 }
 
+header {
+    background: linear-gradient(to bottom, rgb(248, 248, 248), rgb(248, 248, 248) 80%, transparent);
+    height: 64px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 30;
+}
+
 .chat-area {
+    line-height: 28px;
     margin-inline: auto;
     max-width: 800px;
-    padding: 24px;
+    padding: 64px 24px 192px;
 }
 
 .message-input {
