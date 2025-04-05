@@ -3,6 +3,7 @@ const userMessageInput = document.querySelector('#user-message-input');
 
 let chatHistory = [];
 
+userMessageInput.focus();
 userMessageInput.addEventListener('keydown', processUserMessage);
 
 
