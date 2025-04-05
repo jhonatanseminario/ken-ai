@@ -36,6 +36,9 @@ async function processUserMessage (event) {
 
             chatArea.appendChild(userMessageBubble);
 
+            document.body.scrollTop = document.body.scrollHeight;
+            document.documentElement.scrollTop = document.documentElement.scrollHeight;
+
             userMessageInput.value = '';
             
             const data = await fetchServerResponse(userMessage, chatHistory);
@@ -58,6 +61,9 @@ function updateChatArea (data) {
     // console.log(data.contents); // TODO
 
     chatArea.appendChild(modelMessageBubble);
+
+    document.body.scrollTop = document.body.scrollHeight;
+    document.documentElement.scrollTop = document.documentElement.scrollHeight;
 }
 
 
