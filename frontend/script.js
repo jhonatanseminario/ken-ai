@@ -1,3 +1,5 @@
+const textPrimary = document.querySelector('.text-primary');
+const textSecondary = document.querySelector('.text-secondary');
 const logo = document.querySelector('#logo');
 const chatArea = document.querySelector('#chat-area');
 const userMessageInput = document.querySelector('#user-message-input');
@@ -9,6 +11,9 @@ userMessageInput.addEventListener('keydown', processUserMessage);
 
 logo.addEventListener('click', () => {
     chatArea.innerHTML = '';
+
+    textPrimary.removeAttribute('hidden');
+    textSecondary.removeAttribute('hidden');
 
     userMessageInput.classList.add('centered');
     userMessageInput.value = '';
@@ -39,6 +44,9 @@ async function processUserMessage (event) {
             if (!userMessage) return;
 
             userMessageInput.classList.remove('centered')
+
+            textPrimary.setAttribute('hidden', '');
+            textSecondary.setAttribute('hidden', '');
 
             userMessage = userMessage.replace(/\n/g, '<br>');
 

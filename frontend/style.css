@@ -1,5 +1,8 @@
 :root {
     --font-sans: "Inter", "Roboto", system-ui, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+    scrollbar-color: rgb(0, 0, 0, 0.3) transparent;
+    scrollbar-width: thin;
 }
 
 * {
@@ -57,6 +60,27 @@ header {
     &:hover {
         opacity: .7;
     }
+}
+
+.heading {
+    font-size: 30px;
+    letter-spacing: .5px;
+    position: fixed;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+}
+
+.text-primary {
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    transform: translateY(-800%);
+}
+
+.text-secondary {
+    font-weight: 400;
+    opacity: .8;
+    transform: translateY(-670%);
 }
 
 .chat-area {
@@ -126,6 +150,7 @@ header {
 
 .message-input.centered {
     bottom: auto;
+    max-height: 184px;
     top: 50%;
     transform: translateY(-50%);
 }
