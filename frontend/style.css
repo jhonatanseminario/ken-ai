@@ -30,6 +30,35 @@ header {
     z-index: 30;
 }
 
+.logo {
+    cursor: pointer;
+    left: 32px;
+    opacity: .7;
+    position: absolute;
+    top: 20px;
+    transition: opacity 0.3s ease;
+    width: 64px;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.user-icon {
+    background-color: rgb(0, 0, 0);
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 8px;
+    position: absolute;
+    right: 32px;
+    top: 16px;
+    width: 38px;
+
+    &:hover {
+        opacity: .7;
+    }
+}
+
 .chat-area {
     line-height: 28px;
     margin-inline: auto;
