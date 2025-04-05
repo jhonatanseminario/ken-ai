@@ -125,13 +125,22 @@ header {
 }
 
 .hidden-bottom {
+    align-content: center;
     background: rgb(248 248 248);
     bottom: 0px;
+    font-size: 12px;
     height: 48px;
     left: 0;
     margin-inline: auto;
     position: fixed;
     right: 0;
+    text-align: center;
     width: 800px;
     z-index: 10;
+}
+
+.profile-link {
+    color: rgb(0, 0, 0);
+    font-weight: 550;
+    text-decoration: none;
 }
