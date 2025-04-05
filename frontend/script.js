@@ -53,6 +53,8 @@ function updateChatArea (data) {
         
     modelMessageBubble.classList.add('model-message-bubble');
     modelMessageBubble.innerHTML = marked.parse(data.contents);
+    
+    console.log(data.contents);
 
     chatArea.appendChild(modelMessageBubble);
 }

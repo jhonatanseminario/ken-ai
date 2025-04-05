@@ -77,7 +77,9 @@ async function fetchApiResponse (event) {
         const chunk = decoder.decode(value, { stream: true });
         const json = chunk.replace(/^data: /, '').trim();
         const data = JSON.parse(json);
-        const modelMessage = data.candidates[0].content.parts[0].text;
+
+        modelMessage = data.candidates[0].content.parts[0].text;
+        
         console.log(modelMessage);
 
         updateChatHistory(chatHistory, "model", modelMessage);
