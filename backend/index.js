@@ -78,7 +78,7 @@ async function fetchApiResponse (event) {
         const json = chunk.replace(/^data: /, '').trim();
         const data = JSON.parse(json);
 
-        newMessage = data.candidates[0].content.parts[0].text; //! ACCUMULATE CHUNKS AND SEND THE FINAL RESULT
+        newMessage = data.candidates[0].content.parts[0].text; //! ACUMULA CHUNKS Y ENVIA EL RESULTADO FINAL
         modelMessage += newMessage;
 
         // modelMessage = data.candidates[0].content.parts[0].text; //! ENVIA EL ULTIMO CHUNK
