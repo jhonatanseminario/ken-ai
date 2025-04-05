@@ -89,7 +89,7 @@ header {
     border: 1px solid rgb(232, 232, 232);
     border-radius: 24px;
     bottom: 48px;
-    box-shadow: 0 2px 8px rgb(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgb(0, 0, 0, 0.03);
     font-family: inherit;
     field-sizing: content;
     font-size: 16px;
@@ -122,6 +122,12 @@ header {
         font-family: inherit;
         letter-spacing: inherit;
     }
+}
+
+.message-input.centered {
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .hidden-bottom {

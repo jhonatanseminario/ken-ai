@@ -1,3 +1,4 @@
+const logo = document.querySelector('#logo');
 const chatArea = document.querySelector('#chat-area');
 const userMessageInput = document.querySelector('#user-message-input');
 
@@ -5,6 +6,16 @@ let chatHistory = [];
 
 userMessageInput.focus();
 userMessageInput.addEventListener('keydown', processUserMessage);
+
+logo.addEventListener('click', () => {
+    chatArea.innerHTML = '';
+
+    userMessageInput.classList.add('centered');
+    userMessageInput.value = '';
+    userMessageInput.focus();
+
+    chatHistory = [];
+});
 
 
 async function processUserMessage (event) {
@@ -26,6 +37,8 @@ async function processUserMessage (event) {
             let userMessage = userMessageInput.value.trim();
         
             if (!userMessage) return;
+
+            userMessageInput.classList.remove('centered')
 
             userMessage = userMessage.replace(/\n/g, '<br>');
 
