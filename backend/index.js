@@ -9,7 +9,7 @@ module.exports.handler = async event => {
     } catch (error) {
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'No se pudo responder a la solicitud.' }),
+            body: JSON.stringify({ error: 'Could not respond to the request.' }),
         }
     }
 }
@@ -20,14 +20,14 @@ function validateRequest (event) {
         return {
             statusCode: 405,
             headers: { "Allow": "POST" },
-            body: JSON.stringify({ error: 'Método no permitido, utiliza POST.' })
+            body: JSON.stringify({ error: 'Method not allowed, use POST.' })
         }
     }
     
     if (!event.body) {
         return {
             statusCode: 400,
-            body: JSON.stringify({ error: 'No se recibió el cuerpo de la solicitud.' })
+            body: JSON.stringify({ error: 'No request body received.' })
         }
     }
 
@@ -36,7 +36,7 @@ function validateRequest (event) {
     if (!userMessage || !chatHistory) {
         return {
             statusCode: 422,
-            body: JSON.stringify({ error: 'Faltan los campos requeridos o están malformados.' })
+            body: JSON.stringify({ error: 'Required fields are missing or malformed.' })
         }
     }
 }
@@ -59,7 +59,7 @@ async function fetchApiResponse (event) {
     if (!response.ok) {
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Error al intentar conectarse con la API.' })
+            body: JSON.stringify({ error: 'Error trying to connect to the API.' })
         }
     }
 
@@ -78,7 +78,7 @@ async function fetchApiResponse (event) {
         const json = chunk.replace(/^data: /, '').trim();
         const data = JSON.parse(json);
 
-        newMessage = data.candidates[0].content.parts[0].text; //! ACUMULA CHUNKS Y ENVIA EL RESULTADO FINAL
+        newMessage = data.candidates[0].content.parts[0].text; //! ACCUMULATE CHUNKS AND SEND THE FINAL RESULT
         modelMessage += newMessage;
 
         // modelMessage = data.candidates[0].content.parts[0].text; //! ENVIA EL ULTIMO CHUNK
