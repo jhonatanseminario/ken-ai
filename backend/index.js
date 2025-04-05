@@ -63,10 +63,25 @@ async function fetchApiResponse (event) {
         }
     }
 
-    const data = await response.json();
-    const modelMessage = data.candidates[0].content.parts[0].text;
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    
+    let done, value;
+    let modelMessage = "";
 
-    updateChatHistory(chatHistory, "model", modelMessage);
+    while (!done) {
+        ({ done, value } = await reader.read());
+
+        if (done) { break }
+
+        const chunk = decoder.decode(value, { stream: true });
+        const json = chunk.replace(/^data: /, '').trim();
+        const data = JSON.parse(json);
+        const modelMessage = data.candidates[0].content.parts[0].text;
+        console.log(modelMessage);
+
+        updateChatHistory(chatHistory, "model", modelMessage);
+    }
 
     return {
         statusCode: 200,
