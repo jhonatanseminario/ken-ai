@@ -78,12 +78,8 @@ async function fetchApiResponse (event) {
         const json = chunk.replace(/^data: /, '').trim();
         const data = JSON.parse(json);
 
-        newMessage = data.candidates[0].content.parts[0].text; //! ACUMULA CHUNKS Y ENVIA EL RESULTADO FINAL
+        newMessage = data.candidates[0].content.parts[0].text;
         modelMessage += newMessage;
-
-        // modelMessage = data.candidates[0].content.parts[0].text; //! ENVIA EL ULTIMO CHUNK
-        
-        console.log(modelMessage); // TODO
 
         updateChatHistory(chatHistory, "model", modelMessage);
     }
