@@ -1,7 +1,9 @@
 :root {
     --font-sans: "Inter", "Roboto", system-ui, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 
+    overflow-y: scroll;
     scrollbar-color: rgb(0, 0, 0, 0.3) transparent;
+    scrollbar-gutter: stable;
     scrollbar-width: thin;
 }
 
@@ -36,14 +38,14 @@ header {
 .logo {
     cursor: pointer;
     left: 32px;
-    opacity: .7;
+    opacity: 1;
     position: absolute;
     top: 20px;
     transition: opacity 0.3s ease;
     width: 64px;
 
     &:hover {
-        opacity: 1;
+        opacity: .7;
     }
 }
 
