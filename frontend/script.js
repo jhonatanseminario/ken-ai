@@ -62,35 +62,22 @@ async function processUserMessage (event) {
 
             userMessageInput.value = '';
             
-            const data = await fetchServerResponse(userMessage, chatHistory);
-            
-            if (data) {
-                updateChatArea(data);
-                chatHistory = data.chatHistory;
-            }
+            await fetchServerResponse(userMessage, chatHistory);
         }
     }
 }
 
-
-function updateChatArea (data) {
-    const modelMessageBubble = document.createElement('div');
-        
-    modelMessageBubble.classList.add('model-message-bubble');
-    modelMessageBubble.innerHTML = marked.parse(data.contents);
-
-    chatArea.appendChild(modelMessageBubble);
-
-    document.body.scrollTop = document.body.scrollHeight;
-    document.documentElement.scrollTop = document.documentElement.scrollHeight;
-}
-
-
 async function fetchServerResponse (userMessage, chatHistory) {
+    const endpoint = 'https://jsjbyfewdphbvloudeaz.supabase.co/functions/v1/hola-mundo';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzamJ5ZmV3ZHBoYnZsb3VkZWF6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5MDM4MDIsImV4cCI6MjA1OTQ3OTgwMn0.9Wds_GSE_-CsFXaeNP6zwTQDc2j807qnIzM_jNbLxuw';
+
     try {
-        const response = await fetch('/.netlify/functions/index', {
+        const response = await fetch(endpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({ userMessage, chatHistory }),
         });
 
@@ -105,8 +92,30 @@ async function fetchServerResponse (userMessage, chatHistory) {
             return;
         }
 
-        const data = await response.json();
-        return data;
+        const modelMessageBubble = document.createElement('div');
+        modelMessageBubble.classList.add('model-message-bubble');
+        chatArea.appendChild(modelMessageBubble);
+        
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+
+        let done, chunk;
+
+        while (!done) {
+            const { value, done } = await reader.read();
+
+            if (done) break;
+
+            chunk = decoder.decode(value, { stream: true });
+
+            const matches = chunk.match(/({[^}]*})/g);
+            const objects = matches.map(json => JSON.parse(json));
+
+
+            objects.forEach(obj => {
+                modelMessageBubble.textContent += (obj.message) 
+            });
+        }
     
     } catch (error) {
         console.error(`Unable to connect to the server.\n\n${error}\n\n`);
