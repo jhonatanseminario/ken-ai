@@ -116,6 +116,11 @@ async function fetchServerResponse (userMessage, chatHistory) {
                 modelMessageBubble.textContent += (obj.message) 
             });
         }
+
+        chatHistory.push(
+            { role: "user", text: userMessage },
+            { role: "model", text: modelMessageBubble.textContent }
+        );
     
     } catch (error) {
         console.error(`Unable to connect to the server.\n\n${error}\n\n`);
