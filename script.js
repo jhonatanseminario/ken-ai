@@ -1,8 +1,13 @@
+import * as smd from "https://cdn.jsdelivr.net/npm/streaming-markdown/smd.min.js";
+
 const textPrimary = document.querySelector('.text-primary');
 const textSecondary = document.querySelector('.text-secondary');
 const logo = document.querySelector('#logo');
 const chatArea = document.querySelector('#chat-area');
 const userMessageInput = document.querySelector('#user-message-input');
+
+const renderer = smd.default_renderer(chatArea);
+const parser = smd.parser(renderer);
 
 let chatHistory = [];
 
@@ -113,16 +118,15 @@ async function fetchServerResponse (userMessage, chatHistory) {
 
 
             objects.forEach(obj => {
-                for (const char of obj.message) {      
-                    char === " " 
-                        ? modelMessageBubble.textContent += " "
-                        : modelMessageBubble.textContent += char
-                }
+                modelMessageBubble.textContent = " ";
+                smd.parser_write(parser, obj.message);
 
                 document.body.scrollTop = document.body.scrollHeight;
                 document.documentElement.scrollTop = document.documentElement.scrollHeight;
             });
         }
+
+        smd.parser_end(parser);
 
         chatHistory.push(
             { role: "user", text: userMessage },
