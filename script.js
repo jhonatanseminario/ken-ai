@@ -53,12 +53,10 @@ async function processUserMessage (event) {
             textPrimary.setAttribute('hidden', '');
             textSecondary.setAttribute('hidden', '');
 
-            userMessage = userMessage.replace(/\n/g, '<br>');
-
             const userMessageBubble = document.createElement('div');
             
             userMessageBubble.classList.add('user-message-bubble');
-            userMessageBubble.textContent = userMessage;
+            userMessageBubble.innerHTML = userMessage.replace(/\n/g, '<br>');
 
             chatArea.appendChild(userMessageBubble);
 
