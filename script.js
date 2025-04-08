@@ -113,7 +113,14 @@ async function fetchServerResponse (userMessage, chatHistory) {
 
 
             objects.forEach(obj => {
-                modelMessageBubble.textContent += (obj.message) 
+                for (const char of obj.message) {      
+                    char === " " 
+                        ? modelMessageBubble.textContent += " "
+                        : modelMessageBubble.textContent += char
+                }
+
+                document.body.scrollTop = document.body.scrollHeight;
+                document.documentElement.scrollTop = document.documentElement.scrollHeight;
             });
         }
 
