@@ -89,14 +89,14 @@ header {
     line-height: 28px;
     margin-inline: auto;
     max-width: 800px;
-    padding: 64px 20px 192px;
+    padding: 40px 20px 200px;
 }
 
 .user-message-bubble {
     background-color: rgb(255, 255, 255);
     border-radius: 24px 24px 8px;
     border: 1px solid rgb(232, 232, 232);
-    margin-bottom: 48px;
+    margin-block: 24px;
     margin-left: auto;
     max-width: 600px;
     padding: 10px 16px;
@@ -108,7 +108,20 @@ header {
 }
 
 .model-message-bubble {
-    margin-bottom: 48px;
+    margin-block: 24px;
+}
+
+.animation {
+    opacity: 0;
+    filter: blur(2px);
+    animation: fadeIn .4s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        filter: blur(0px);
+    }
 }
 
 .message-input {

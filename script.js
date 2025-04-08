@@ -1,4 +1,4 @@
-import * as smd from "https://cdn.jsdelivr.net/npm/streaming-markdown/smd.min.js";
+import * as smd from "./smd.js";
 
 const textPrimary = document.querySelector('.text-primary');
 const textSecondary = document.querySelector('.text-secondary');
@@ -58,7 +58,7 @@ async function processUserMessage (event) {
             const userMessageBubble = document.createElement('div');
             
             userMessageBubble.classList.add('user-message-bubble');
-            userMessageBubble.innerHTML = marked.parse(userMessage);
+            userMessageBubble.textContent = userMessage;
 
             chatArea.appendChild(userMessageBubble);
 
