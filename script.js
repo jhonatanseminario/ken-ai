@@ -111,7 +111,7 @@ async function fetchServerResponse (userMessage, chatHistory) {
 
             chunk = decoder.decode(value, { stream: true });
 
-            const matches = chunk.match(/({[^}]*})/g);
+            const matches = chunk.match(/(?=\{"message":)({[\s\S]*?})(?=\{|$)/g);
             const objects = matches.map(json => JSON.parse(json));
 
 
