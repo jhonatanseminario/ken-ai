@@ -1539,7 +1539,10 @@ export function default_add_token(data, type) {
     case EQUATION_INLINE: slot = document.createElement("equation-inline"); break
     }
 
-    slot.classList.add("animation")
+    slot.classList.add("animation");
+    setTimeout(() => {
+        slot.classList.remove("animation");
+    }, 400);
 
     data.nodes[++data.index] = parent.appendChild(slot)
 }

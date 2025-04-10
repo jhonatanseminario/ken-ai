@@ -115,12 +115,24 @@ async function fetchServerResponse (userMessage, chatHistory) {
             const objects = matches.map(json => JSON.parse(json));
 
 
-            objects.forEach(obj => {
+            objects.forEach( obj => {
                 modelMessageBubble.textContent = " ";
                 smd.parser_write(parser, obj.message);
 
                 document.body.scrollTop = document.body.scrollHeight;
                 document.documentElement.scrollTop = document.documentElement.scrollHeight;
+            });
+
+            const codeBlocks = document.querySelectorAll('pre code');
+
+            codeBlocks.forEach( block => {
+                block.removeAttribute("data-highlighted");
+                
+                if (!block.className.includes('language-') && block.className !== "animation") {
+                    block.className = `language-${block.className}`;
+                    
+                }
+                hljs.highlightElement(block); 
             });
         }
 

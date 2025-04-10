@@ -1,5 +1,6 @@
 :root {
     --font-sans: "Inter", "Roboto", system-ui, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-monospace: "Roboto Mono", "Inconsolata", "Consolas", "Courier New", monospace;
 
     overflow-y: scroll;
     scrollbar-color: rgb(0, 0, 0, 0.3) transparent;
@@ -36,7 +37,21 @@ header {
 }
 
 li {
-    margin-block: 8px;
+    margin-block: 12px;
+}
+
+pre code.hljs {
+    background-color: rgb(255, 255, 255);
+}
+
+pre code {
+    border-radius: 8px;
+    border: 1px solid rgb(216, 216, 216);
+    font-family: var(--font-monospace);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-inline: 8px;
 }
 
 .logo {
@@ -118,7 +133,7 @@ li {
 .animation {
     opacity: 0;
     filter: blur(2px);
-    animation: fadeIn .4s forwards;
+    animation: fadeIn .3s forwards;
 }
 
 @keyframes fadeIn {
@@ -157,7 +172,7 @@ li {
     }
 
     &:focus {
-        border: 1px solid #a8a8a8;
+        border: 1px solid rgb(168, 168, 168);
         outline: none;
     }
 
