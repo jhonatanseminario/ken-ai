@@ -40,28 +40,12 @@ li {
     margin-block: 12px;
 }
 
-li li pre code{
-    margin-left: -72px;
-}
-
-li pre code{
+li pre code {
     margin-left: -32px;
 }
 
-pre code.hljs {
-    background-color: rgb(255, 255, 255);
-    padding: 24px;
-}
-
-pre code {
-    border-radius: 8px;
-    border: 1px solid rgb(216, 216, 216);
-    font-family: var(--font-monospace);
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 24px;
-    margin-inline: 8px;
-    max-width: 743px;
+li li pre code {
+    margin-left: -72px;
 }
 
 code {
@@ -73,6 +57,24 @@ code {
     font-weight: 400;
     padding: 3px 6px;
     white-space: pre;
+}
+
+pre code {
+    border-radius: 8px;
+    border: 1px solid rgb(216, 216, 216);
+    font-family: var(--font-monospace);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-inline: 8px;
+    max-width: 743px;
+    scrollbar-color: rgb(0 0 0 / 20%) transparent;
+    scrollbar-width: thin;
+}
+
+pre code.hljs {
+    background-color: rgb(255, 255, 255);
+    padding: 24px;
 }
 
 a {
