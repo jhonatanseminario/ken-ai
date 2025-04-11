@@ -119,8 +119,8 @@ async function fetchServerResponse (userMessage, chatHistory) {
                 modelMessageBubble.textContent = " ";
                 smd.parser_write(parser, obj.message);
 
-                document.body.scrollTop = document.body.scrollHeight;
-                document.documentElement.scrollTop = document.documentElement.scrollHeight;
+                // document.body.scrollTop = document.body.scrollHeight;
+                // document.documentElement.scrollTop = document.documentElement.scrollHeight;
             });
 
             const codeBlocks = document.querySelectorAll('pre code');

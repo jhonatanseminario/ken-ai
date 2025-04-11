@@ -40,8 +40,17 @@ li {
     margin-block: 12px;
 }
 
+li li pre code{
+    margin-left: -72px;
+}
+
+li pre code{
+    margin-left: -32px;
+}
+
 pre code.hljs {
     background-color: rgb(255, 255, 255);
+    padding: 24px;
 }
 
 pre code {
@@ -52,7 +61,7 @@ pre code {
     font-weight: 400;
     line-height: 24px;
     margin-inline: 8px;
-    padding: 24px;
+    max-width: 743px;
 }
 
 code {
@@ -74,6 +83,10 @@ a {
     &:hover {
         color: rgb(84, 148, 235);
     }
+}
+
+img {
+    user-select: none;
 }
 
 .logo {
