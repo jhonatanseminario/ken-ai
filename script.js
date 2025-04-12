@@ -118,9 +118,6 @@ async function fetchServerResponse (userMessage, chatHistory) {
             objects.forEach( obj => {
                 modelMessageBubble.textContent = " ";
                 smd.parser_write(parser, obj.message);
-
-                // document.body.scrollTop = document.body.scrollHeight;
-                // document.documentElement.scrollTop = document.documentElement.scrollHeight;
             });
 
             const codeBlocks = document.querySelectorAll('pre code');
@@ -129,7 +126,7 @@ async function fetchServerResponse (userMessage, chatHistory) {
                 block.removeAttribute("data-highlighted");
                 
                 if (!block.className.includes('language-') && block.className !== "animation") {
-                    block.className = `language-${block.className}`;
+                    block.className = `language-${block.className || 'plaintext'}`;
                 }
         
                 if (block.className.startsWith('language-')) {
@@ -138,24 +135,9 @@ async function fetchServerResponse (userMessage, chatHistory) {
                     if (languageClass) {
                         const language = languageClass.replace('language-', '');
                         const uniqueId = `language-style-${language}`;
+                        const pre = block.closest('pre');
         
                         if (!document.getElementById(uniqueId)) {
-                            const button = document.createElement('button');
-                            button.textContent = 'Copiar';
-                            button.classList.add('copy-button');
-                    
-                            const pre = block.closest('pre');
-                            pre.appendChild(button);
-
-                            button.addEventListener('click', () => {
-                                navigator.clipboard.writeText(block.textContent);
-                                button.textContent = '¡Copiado!';
-                                    
-                                setTimeout(() => {
-                                    button.textContent = 'Copiar';
-                                }, 2000);
-                            });
-
                             const style = document.createElement('style');
                             style.id = uniqueId;
         
@@ -172,12 +154,47 @@ async function fetchServerResponse (userMessage, chatHistory) {
                             `;
                             document.head.appendChild(style);
                         }
+
+                        if (!pre.querySelector('button')) {
+                            const button = document.createElement('button');
+
+                            button.textContent = 'Copiar';
+                            button.classList.add('copy-button');
+                            pre.appendChild(button);
+
+                            button.addEventListener('click', () => {
+                                navigator.clipboard.writeText(block.textContent);
+                                button.textContent = '✔ Copiado';
+                                    
+                                setTimeout(() => {
+                                    button.textContent = 'Copiar';
+                                }, 2000);
+                            });
+                        }
                     }
                 }
                 hljs.highlightElement(block); 
             });
-        }
 
+        }
+        
+        const codeBlocks = document.querySelectorAll('pre code');
+        
+        codeBlocks.forEach( block => {
+            const lines = block.textContent.split('\n');
+            const firstLine = lines[0];
+            const match = firstLine.match(/^ +/);
+
+            if (!match) return;
+        
+            const baseIndent = match[0].length;
+            const trimmedLines = lines.map( line => line.slice(baseIndent) );
+        
+            block.textContent = trimmedLines.join('\n');
+            block.removeAttribute("data-highlighted");
+            hljs.highlightElement(block);
+        });
+        
         smd.parser_end(parser);
 
         chatHistory.push(
