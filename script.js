@@ -130,7 +130,49 @@ async function fetchServerResponse (userMessage, chatHistory) {
                 
                 if (!block.className.includes('language-') && block.className !== "animation") {
                     block.className = `language-${block.className}`;
+                }
+        
+                if (block.className.startsWith('language-')) {
+                    const languageClass = Array.from(block.classList).find(className => className.startsWith('language-'));
+        
+                    if (languageClass) {
+                        const language = languageClass.replace('language-', '');
+                        const uniqueId = `language-style-${language}`;
+        
+                        if (!document.getElementById(uniqueId)) {
+                            const button = document.createElement('button');
+                            button.textContent = 'Copiar';
+                            button.classList.add('copy-button');
                     
+                            const pre = block.closest('pre');
+                            pre.appendChild(button);
+
+                            button.addEventListener('click', () => {
+                                navigator.clipboard.writeText(block.textContent);
+                                button.textContent = '¡Copiado!';
+                                    
+                                setTimeout(() => {
+                                    button.textContent = 'Copiar';
+                                }, 2000);
+                            });
+
+                            const style = document.createElement('style');
+                            style.id = uniqueId;
+        
+                            style.textContent = `
+                                pre code.language-${language}::before {
+                                    content: "${language}";
+                                    color: rgb(96, 96, 96);
+                                    display: block;
+                                    font-size: 12px;
+                                    left: -8px;
+                                    position: relative;
+                                    top: -24px;
+                                }
+                            `;
+                            document.head.appendChild(style);
+                        }
+                    }
                 }
                 hljs.highlightElement(block); 
             });
