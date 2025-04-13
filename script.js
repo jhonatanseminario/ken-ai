@@ -206,3 +206,26 @@ async function fetchServerResponse (userMessage, chatHistory) {
         console.error(`Unable to connect to the server.\n\n${error}\n\n`);
     }
 }
+
+function wrapTablesInContainer() {
+    const tables = chatArea.querySelectorAll("table");
+
+    tables.forEach( table => {
+        if (!table.parentElement.classList.contains("table-wrapper")) {
+            const wrapper = document.createElement("div");
+            
+            wrapper.className = "table-wrapper";
+            table.parentElement.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+        }
+    });
+}
+
+const observer = new MutationObserver(() => {
+    wrapTablesInContainer();
+});
+
+observer.observe(chatArea, {
+    childList: true,
+    subtree: true
+});
