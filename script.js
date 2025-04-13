@@ -126,7 +126,7 @@ async function fetchServerResponse (userMessage, chatHistory) {
                 block.removeAttribute("data-highlighted");
                 
                 if (!block.className.includes('language-') && block.className !== "animation") {
-                    block.className = `language-${block.className || 'plaintext'}`;
+                    block.className = `language-${block.className || 'txt'}`;
                 }
         
                 if (block.className.startsWith('language-')) {
