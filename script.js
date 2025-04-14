@@ -74,6 +74,12 @@ async function fetchServerResponse (userMessage, chatHistory) {
     const endpoint = 'https://jsjbyfewdphbvloudeaz.supabase.co/functions/v1/hola-mundo';
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzamJ5ZmV3ZHBoYnZsb3VkZWF6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5MDM4MDIsImV4cCI6MjA1OTQ3OTgwMn0.9Wds_GSE_-CsFXaeNP6zwTQDc2j807qnIzM_jNbLxuw';
 
+    const thinkingBubble = document.createElement('div');
+
+    thinkingBubble.classList.add('thinking-message');
+    thinkingBubble.textContent = 'Pensando...';
+    chatArea.appendChild(thinkingBubble);
+
     try {
         const response = await fetch(endpoint, {
             method: 'POST',
@@ -94,6 +100,8 @@ async function fetchServerResponse (userMessage, chatHistory) {
 
             return;
         }
+
+        if (thinkingBubble && thinkingBubble.parentNode) thinkingBubble.remove();
 
         const modelMessageBubble = document.createElement('div');
         modelMessageBubble.classList.add('model-message-bubble');

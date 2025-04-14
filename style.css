@@ -170,6 +170,24 @@ img {
     }
 }
 
+.thinking-message {
+    color: #666;
+    font-style: italic;
+    animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.4;
+    }
+}
+
 .model-message-bubble {
     margin-block: 24px;
 }
