@@ -56,7 +56,13 @@ async function processUserMessage (event) {
             const userMessageBubble = document.createElement('div');
             
             userMessageBubble.classList.add('user-message-bubble');
-            userMessageBubble.innerHTML = userMessage.replace(/\n/g, '<br>');
+
+            const lines = userMessage.split('\n');
+
+            lines.forEach( (line, index) => {
+                userMessageBubble.appendChild(document.createTextNode(line));
+                if (index < lines.length - 1) userMessageBubble.appendChild(document.createElement('br'));
+            });
 
             chatArea.appendChild(userMessageBubble);
 
