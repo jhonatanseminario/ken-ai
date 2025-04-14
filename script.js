@@ -148,40 +148,31 @@ async function fetchServerResponse (userMessage, chatHistory) {
         
                     if (languageClass) {
                         const language = languageClass.replace('language-', '');
-                        const uniqueId = `language-style-${language}`;
                         const pre = block.closest('pre');
         
-                        if (!document.getElementById(uniqueId)) {
-                            const style = document.createElement('style');
-                            style.id = uniqueId;
-        
-                            style.textContent = `
-                                pre code.language-${language}::before {
-                                    content: "${language}";
-                                    color: rgb(96, 96, 96);
-                                    display: block;
-                                    font-size: 12px;
-                                    left: -8px;
-                                    position: relative;
-                                    top: -24px;
-                                }
-                            `;
-                            document.head.appendChild(style);
+                        if (!pre.querySelector('.title-button')) {
+                            const titleButton = document.createElement('button');
+
+                            titleButton.textContent = `${language}`;
+                            titleButton.classList.add('title-button');
+
+                            pre.appendChild(titleButton);
                         }
+                    
+                        if (!pre.querySelector('.copy-button')) {
+                            const copyButton = document.createElement('button');
 
-                        if (!pre.querySelector('button')) {
-                            const button = document.createElement('button');
+                            copyButton.textContent = 'Copiar';
+                            copyButton.classList.add('copy-button');
 
-                            button.textContent = 'Copiar';
-                            button.classList.add('copy-button');
-                            pre.appendChild(button);
+                            pre.appendChild(copyButton);
 
-                            button.addEventListener('click', () => {
+                            copyButton.addEventListener('click', () => {
                                 navigator.clipboard.writeText(block.textContent);
-                                button.textContent = '✔ Copiado';
+                                copyButton.textContent = '✔ Copiado';
                                     
                                 setTimeout(() => {
-                                    button.textContent = 'Copiar';
+                                    copyButton.textContent = 'Copiar';
                                 }, 2000);
                             });
                         }
