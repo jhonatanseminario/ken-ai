@@ -131,6 +131,7 @@ async function fetchServerResponse (userMessage, chatHistory) {
 
             objects.forEach( obj => {
                 modelMessageBubble.textContent = " ";
+                console.log("📦 CONTENIDO DEL CHUNK: ", obj.message);
                 smd.parser_write(parser, obj.message);
             });
 
@@ -184,18 +185,21 @@ async function fetchServerResponse (userMessage, chatHistory) {
         }
         
         const codeBlocks = document.querySelectorAll('pre code');
-        const lastBlock = codeBlocks[codeBlocks.length - 1];
-        const lines = lastBlock.textContent.split('\n');
-        const firstLine = lines[0];
-        const match = firstLine.match(/^ +/);
 
-        if (match) {
-            const baseIndent = match[0].length;
-            const trimmedLines = lines.map( line => line.slice(baseIndent) );
-        
-            lastBlock.textContent = trimmedLines.join('\n');
-            lastBlock.removeAttribute("data-highlighted");
-            hljs.highlightElement(lastBlock); 
+        if (codeBlocks.length > 0) {
+            const lastBlock = codeBlocks[codeBlocks.length - 1];
+            const lines = lastBlock.textContent.split('\n');
+            const firstLine = lines[0];
+            const match = firstLine.match(/^ +/);
+
+            if (match) {
+                const baseIndent = match[0].length;
+                const trimmedLines = lines.map( line => line.slice(baseIndent) );
+
+                lastBlock.textContent = trimmedLines.join('\n');
+                lastBlock.removeAttribute("data-highlighted");
+                hljs.highlightElement(lastBlock);
+            }
         }   
 
         smd.parser_end(parser);
