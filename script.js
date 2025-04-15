@@ -184,22 +184,20 @@ async function fetchServerResponse (userMessage, chatHistory) {
         }
         
         const codeBlocks = document.querySelectorAll('pre code');
-        
-        codeBlocks.forEach( block => {
-            const lines = block.textContent.split('\n');
-            const firstLine = lines[0];
-            const match = firstLine.match(/^ +/);
+        const lastBlock = codeBlocks[codeBlocks.length - 1];
+        const lines = lastBlock.textContent.split('\n');
+        const firstLine = lines[0];
+        const match = firstLine.match(/^ +/);
 
-            if (!match) return;
-        
+        if (match) {
             const baseIndent = match[0].length;
             const trimmedLines = lines.map( line => line.slice(baseIndent) );
         
-            block.textContent = trimmedLines.join('\n');
-            block.removeAttribute("data-highlighted");
-            hljs.highlightElement(block);
-        });
-        
+            lastBlock.textContent = trimmedLines.join('\n');
+            lastBlock.removeAttribute("data-highlighted");
+            hljs.highlightElement(lastBlock); 
+        }   
+
         smd.parser_end(parser);
 
         chatHistory.push(
@@ -226,11 +224,48 @@ function wrapTablesInContainer() {
     });
 }
 
-const observer = new MutationObserver(() => {
+const observerTables = new MutationObserver(() => {
     wrapTablesInContainer();
 });
 
-observer.observe(chatArea, {
+observerTables.observe(chatArea, {
+    childList: true,
+    subtree: true
+});
+
+const observerBlockCodes = new MutationObserver( mutations => {
+    mutations.forEach( mutation => {
+        if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach(node => {
+                if (node.nodeName === 'PRE' && node.querySelector('code')) {
+                    const codeElements = document.querySelectorAll('pre code');
+                    
+                    if (codeElements.length > 1) {
+                        const allButLast = Array.from(codeElements).slice(0, -1);
+
+                        allButLast.forEach( penultimateCode => {
+                            const lines = penultimateCode.textContent.split('\n');
+                            const firstLine = lines[0];
+                            const match = firstLine.match(/^ +/);
+                
+                            if (!match) return;
+
+                            const baseIndent = match[0].length;
+                            const trimmedLines = lines.map( line => line.slice(baseIndent) );
+                        
+                            penultimateCode.textContent = trimmedLines.join('\n');
+                            penultimateCode.removeAttribute("data-highlighted");
+
+                            hljs.highlightElement(penultimateCode);
+                        });
+                    }
+                }
+            });
+        }
+    });
+});
+
+observerBlockCodes.observe(chatArea, {
     childList: true,
     subtree: true
 });

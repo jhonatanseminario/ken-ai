@@ -48,6 +48,10 @@ li li pre code {
     margin-left: -72px;
 }
 
+li pre .title-button {
+    left: -20px;
+}
+
 pre {
     position: relative;
 }
