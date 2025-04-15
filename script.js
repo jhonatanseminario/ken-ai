@@ -131,8 +131,9 @@ async function fetchServerResponse (userMessage, chatHistory) {
 
             objects.forEach( obj => {
                 modelMessageBubble.textContent = " ";
-                console.log("📦 CONTENIDO DEL CHUNK: ", obj.message);
-                smd.parser_write(parser, obj.message);
+                const parts = obj.message.split(/(```)/);
+
+                parts.forEach( part => { if (part) smd.parser_write(parser, part) });
             });
 
             const codeBlocks = document.querySelectorAll('pre code');
