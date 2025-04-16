@@ -5,12 +5,15 @@ const textSecondary = document.querySelector('.text-secondary');
 const logo = document.querySelector('#logo');
 const chatArea = document.querySelector('#chat-area');
 const userMessageInput = document.querySelector('#user-message-input');
-
-const renderer = smd.default_renderer(chatArea);
-const parser = smd.parser(renderer);
+const messageInputContainer = document.querySelector('.message-input-container');
 
 let chatHistory = [];
 let autoScroll = true;
+let stopGenerating = false;
+
+document.querySelector(".input-btn").addEventListener("click", () => {
+    stopGenerating = true;
+  });  
 
 window.addEventListener('scroll', () => {
     const scrollPosition = window.innerHeight + window.scrollY;
@@ -28,7 +31,7 @@ logo.addEventListener('click', () => {
     textPrimary.removeAttribute('hidden');
     textSecondary.removeAttribute('hidden');
 
-    userMessageInput.classList.add('centered');
+    messageInputContainer.classList.add('centered');
     userMessageInput.value = '';
     userMessageInput.focus();
 
@@ -56,7 +59,7 @@ async function processUserMessage (event) {
         
             if (!userMessage) return;
 
-            userMessageInput.classList.remove('centered')
+            messageInputContainer.classList.remove('centered')
 
             textPrimary.setAttribute('hidden', '');
             textSecondary.setAttribute('hidden', '');
@@ -82,6 +85,7 @@ async function processUserMessage (event) {
 }
 
 async function fetchServerResponse (userMessage, chatHistory) {
+    stopGenerating = false;
     const endpoint = 'https://jsjbyfewdphbvloudeaz.supabase.co/functions/v1/hola-mundo';
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzamJ5ZmV3ZHBoYnZsb3VkZWF6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5MDM4MDIsImV4cCI6MjA1OTQ3OTgwMn0.9Wds_GSE_-CsFXaeNP6zwTQDc2j807qnIzM_jNbLxuw';
 
@@ -126,10 +130,13 @@ async function fetchServerResponse (userMessage, chatHistory) {
 
         let done, chunk;
 
+        const renderer = smd.default_renderer(modelMessageBubble);
+        const parser = smd.parser(renderer);
+
         while (!done) {
             const { value, done } = await reader.read();
 
-            if (done) break;
+            if (done || stopGenerating) break;
 
             chunk = decoder.decode(value, { stream: true });
 
@@ -138,9 +145,7 @@ async function fetchServerResponse (userMessage, chatHistory) {
 
 
             objects.forEach( obj => {
-                modelMessageBubble.textContent = " ";
                 const parts = obj.message.split(/(```)/);
-
                 parts.forEach( part => { if (part) smd.parser_write(parser, part) });
             });
 
