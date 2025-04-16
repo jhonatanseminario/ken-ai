@@ -284,11 +284,42 @@ img {
 }
 
 .input-btn {
-    bottom: 32px;
-    height: 32px;
+    background-color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 50%;
+    bottom: 14px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    height: 36px;
     position: absolute;
-    right: 32px;
-    width: 32px;
+    right: 8px;
+    width: 36px;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    &:active {
+        transform: scale(.9);
+    }
+
+    &:disabled {
+        cursor: default;
+        opacity: 0.4;
+
+        &:hover {
+            transform: scale(1);
+        }
+    
+        &:active {
+            transform: scale(1);
+        }
+    } 
+} 
+
+.input-btn img {
+    height: 24px;
 }
 
 .hidden-bottom {

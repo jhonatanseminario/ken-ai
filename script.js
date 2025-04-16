@@ -6,14 +6,61 @@ const logo = document.querySelector('#logo');
 const chatArea = document.querySelector('#chat-area');
 const userMessageInput = document.querySelector('#user-message-input');
 const messageInputContainer = document.querySelector('.message-input-container');
+const inputButton = document.querySelector(".input-btn");
 
 let chatHistory = [];
 let autoScroll = true;
 let stopGenerating = false;
 
-document.querySelector(".input-btn").addEventListener("click", () => {
-    stopGenerating = true;
-  });  
+function updateButtonImage() {
+    const image = inputButton.querySelector("img");
+    
+    if (inputButton.classList.contains("send-btn")) {
+        image.src = "./assets/icons/send-icon.svg";
+        image.alt = "Ícono de envío";
+    } else {
+        image.src = "./assets/icons/stop-icon.svg";
+        image.alt = "Ícono de detener";
+        image.style.paddingTop = '2px';
+    }
+}
+
+inputButton.addEventListener("click", () => {
+    if (!inputButton.classList.contains('send-btn')) {
+        stopGenerating = true;
+        inputButton.classList.add('send-btn');
+        updateButtonImage();
+    }
+    else if (inputButton.classList.contains('send-btn')) {
+        inputButton.classList.remove('send-btn')
+        updateButtonImage();
+        let userMessage = userMessageInput.value.trim();
+        
+        if (!userMessage) return;
+
+        messageInputContainer.classList.remove('centered')
+
+        textPrimary.setAttribute('hidden', '');
+        textSecondary.setAttribute('hidden', '');
+
+        const userMessageBubble = document.createElement('div');
+        
+        userMessageBubble.classList.add('user-message-bubble');
+
+        const lines = userMessage.split('\n');
+
+        lines.forEach( (line, index) => {
+            userMessageBubble.appendChild(document.createTextNode(line));
+            if (index < lines.length - 1) userMessageBubble.appendChild(document.createElement('br'));
+        });
+
+        chatArea.appendChild(userMessageBubble);
+
+        userMessageInput.value = '';
+        
+        fetchServerResponse(userMessage, chatHistory);
+    };  
+});
 
 window.addEventListener('scroll', () => {
     const scrollPosition = window.innerHeight + window.scrollY;
@@ -24,9 +71,17 @@ window.addEventListener('scroll', () => {
 
 userMessageInput.focus();
 userMessageInput.addEventListener('keydown', processUserMessage);
+userMessageInput.addEventListener("input", (e) => {
+    inputButton.disabled = e.target.value === "";
+});
 
 logo.addEventListener('click', () => {
     chatArea.innerHTML = '';
+    stopGenerating = true;
+
+    inputButton.classList.add('send-btn');
+    inputButton.disabled = true;
+    updateButtonImage();
 
     textPrimary.removeAttribute('hidden');
     textSecondary.removeAttribute('hidden');
@@ -85,9 +140,12 @@ async function processUserMessage (event) {
 }
 
 async function fetchServerResponse (userMessage, chatHistory) {
-    stopGenerating = false;
     const endpoint = 'https://jsjbyfewdphbvloudeaz.supabase.co/functions/v1/hola-mundo';
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzamJ5ZmV3ZHBoYnZsb3VkZWF6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5MDM4MDIsImV4cCI6MjA1OTQ3OTgwMn0.9Wds_GSE_-CsFXaeNP6zwTQDc2j807qnIzM_jNbLxuw';
+
+    stopGenerating = false;
+    inputButton.classList.remove('send-btn');
+    updateButtonImage();
 
     const thinkingBubble = document.createElement('div');
 
@@ -222,6 +280,13 @@ async function fetchServerResponse (userMessage, chatHistory) {
                 hljs.highlightElement(lastBlock);
             }
         }   
+
+        inputButton.disabled = true;
+
+        if (!inputButton.classList.contains('send-btn')) {
+            inputButton.classList.add('send-btn')
+            updateButtonImage();
+        }
 
         smd.parser_end(parser);
 
