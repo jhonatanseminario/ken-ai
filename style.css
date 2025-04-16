@@ -156,18 +156,19 @@ img {
     line-height: 28px;
     margin-inline: auto;
     max-width: 800px;
-    padding: 40px 20px 200px;
+    padding: 40px 20px 220px;
 }
 
 .user-message-bubble {
     background-color: rgb(255, 255, 255);
     border-radius: 24px 24px 8px;
     border: 1px solid rgb(232, 232, 232);
-    margin-block: 24px;
+    margin-block: 32px;
     margin-left: auto;
     max-width: 600px;
     padding: 10px 16px;
     width: fit-content;
+    word-wrap: break-word;
 
     & p {
         margin: 0;
@@ -177,6 +178,7 @@ img {
 .thinking-message {
     color: #666;
     font-style: italic;
+    margin-bottom: 16px;
     animation: pulse 1.2s ease-in-out infinite;
 }
 

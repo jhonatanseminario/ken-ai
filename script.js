@@ -66,9 +66,6 @@ async function processUserMessage (event) {
 
             chatArea.appendChild(userMessageBubble);
 
-            document.body.scrollTop = document.body.scrollHeight;
-            document.documentElement.scrollTop = document.documentElement.scrollHeight;
-
             userMessageInput.value = '';
             
             await fetchServerResponse(userMessage, chatHistory);
@@ -85,6 +82,11 @@ async function fetchServerResponse (userMessage, chatHistory) {
     thinkingBubble.classList.add('thinking-message');
     thinkingBubble.textContent = 'Pensando...';
     chatArea.appendChild(thinkingBubble);
+
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
 
     try {
         const response = await fetch(endpoint, {
@@ -106,9 +108,7 @@ async function fetchServerResponse (userMessage, chatHistory) {
 
             return;
         }
-
-        if (thinkingBubble && thinkingBubble.parentNode) thinkingBubble.remove();
-
+        
         const modelMessageBubble = document.createElement('div');
         modelMessageBubble.classList.add('model-message-bubble');
         chatArea.appendChild(modelMessageBubble);
@@ -134,6 +134,12 @@ async function fetchServerResponse (userMessage, chatHistory) {
                 const parts = obj.message.split(/(```)/);
 
                 parts.forEach( part => { if (part) smd.parser_write(parser, part) });
+                
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                });
+                
             });
 
             const codeBlocks = document.querySelectorAll('pre code');
@@ -182,7 +188,7 @@ async function fetchServerResponse (userMessage, chatHistory) {
                 }
                 hljs.highlightElement(block); 
             });
-
+            if (thinkingBubble && thinkingBubble.parentNode) thinkingBubble.remove();
         }
         
         const codeBlocks = document.querySelectorAll('pre code');
