@@ -10,6 +10,14 @@ const renderer = smd.default_renderer(chatArea);
 const parser = smd.parser(renderer);
 
 let chatHistory = [];
+let autoScroll = true;
+
+window.addEventListener('scroll', () => {
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const bottomThreshold = document.body.offsetHeight - 96;
+
+    autoScroll = scrollPosition >= bottomThreshold;
+});
 
 userMessageInput.focus();
 userMessageInput.addEventListener('keydown', processUserMessage);
@@ -134,13 +142,14 @@ async function fetchServerResponse (userMessage, chatHistory) {
                 const parts = obj.message.split(/(```)/);
 
                 parts.forEach( part => { if (part) smd.parser_write(parser, part) });
-                
+            });
+
+            if (autoScroll) {
                 window.scrollTo({
                     top: document.body.scrollHeight,
                     behavior: 'smooth'
                 });
-                
-            });
+            }
 
             const codeBlocks = document.querySelectorAll('pre code');
 
