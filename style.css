@@ -315,11 +315,47 @@ img {
         &:active {
             transform: scale(1);
         }
-    } 
+    }
+
+    & img {
+        height: 24px;
+        padding-top: 2px;
+    }    
 } 
 
-.input-btn img {
-    height: 24px;
+.scroll-btn {
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    border: 1px solid rgba(5, 5, 5, 0.1);
+    cursor: pointer;
+    opacity: 0;
+    padding-left: 4px;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: -42px;
+    transform: translateY(10px);
+    transition: opacity 0.1s ease, transform 0.1s ease;
+    width: 32px;
+
+    &:hover {
+        background-color: rgb(5, 5, 5, .04);
+
+        & img {
+            filter: contrast(4);
+        }
+    }
+
+    & img {
+        height: 24px;
+        padding-top: 2px;
+    } 
+}
+
+.scroll-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
 }
 
 .hidden-bottom {
@@ -362,6 +398,7 @@ table {
 th {
     border-bottom: 3px solid rgb(232, 232, 232);
     font-size: 14px;
+    min-width: 200px;
     padding: 8px 24px;
     text-align: left;
     white-space: nowrap;

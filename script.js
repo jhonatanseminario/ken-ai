@@ -7,6 +7,7 @@ const chatArea = document.querySelector('#chat-area');
 const userMessageInput = document.querySelector('#user-message-input');
 const messageInputContainer = document.querySelector('.message-input-container');
 const inputButton = document.querySelector(".input-btn");
+const scrollButton = document.querySelector(".scroll-btn");
 
 let chatHistory = [];
 let autoScroll = true;
@@ -27,6 +28,7 @@ function updateButtonImage() {
 
 inputButton.addEventListener("click", () => {
     if (!inputButton.classList.contains('send-btn')) {
+        inputButton.disabled = true;
         stopGenerating = true;
         inputButton.classList.add('send-btn');
         updateButtonImage();
@@ -62,11 +64,32 @@ inputButton.addEventListener("click", () => {
     };  
 });
 
+scrollButton.addEventListener("click", () => {
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+    });
+});
+
 window.addEventListener('scroll', () => {
     const scrollPosition = window.innerHeight + window.scrollY;
     const bottomThreshold = document.body.offsetHeight - 96;
 
     autoScroll = scrollPosition >= bottomThreshold;
+});
+
+window.addEventListener("scroll", () => {
+    const padding = 1;
+    const scrollTop = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+  
+    const reachedBottom = scrollTop + windowHeight >= documentHeight - padding;
+  
+    reachedBottom
+        ? scrollButton.classList.remove("visible")
+        : scrollButton.classList.add("visible");
+
 });
 
 userMessageInput.focus();
