@@ -34,6 +34,10 @@ header {
     top: 0;
     width: 100%;
     z-index: 30;
+
+    @media (min-width: 1080px) {
+        z-index: -10;
+    }
 }
 
 li {
@@ -152,11 +156,18 @@ img {
     transform: translateY(-670%);
 }
 
+.text-primary,
+.text-secondary {
+    @media (max-width: 640px) {
+        font-size: 24px;
+    }
+}
+
 .chat-area {
     line-height: 28px;
     margin-inline: auto;
     max-width: 800px;
-    padding: 40px 20px 220px;
+    padding: 40px 28px 220px;
 }
 
 .user-message-bubble {
@@ -238,6 +249,7 @@ img {
     left: 0;
     margin-inline: auto;
     max-width: 800px;
+    padding-inline: 8px;
     position: fixed;
     right: 0;
     z-index: 20;
@@ -281,6 +293,12 @@ img {
     max-height: 184px;
     top: 50%;
     transform: translateY(-50%);
+
+    @media (max-width: 640px) {
+        bottom: 48px;
+        top: auto;
+        transform: translateY(0%);
+    }
 }
 
 .input-btn {
@@ -292,7 +310,7 @@ img {
     cursor: pointer;
     height: 36px;
     position: absolute;
-    right: 8px;
+    right: 16px;
     width: 36px;
     transition: transform 0.3s ease;
 
@@ -332,7 +350,7 @@ img {
     padding-left: 4px;
     pointer-events: none;
     position: absolute;
-    right: 0;
+    right: 8px;
     top: -42px;
     transform: translateY(10px);
     transition: opacity 0.1s ease, transform 0.1s ease;
