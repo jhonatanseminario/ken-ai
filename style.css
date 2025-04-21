@@ -91,6 +91,7 @@ pre code.hljs {
     background-color: rgb(255, 255, 255);
     padding: 56px 24px 24px;
     position: relative;
+    white-space: pre;
 }
 
 a {

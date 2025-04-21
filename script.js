@@ -113,6 +113,8 @@ logo.addEventListener('click', () => {
     userMessageInput.value = '';
     userMessageInput.focus();
 
+    scrollButton.classList.remove("visible");
+
     chatHistory = [];
 });
 
