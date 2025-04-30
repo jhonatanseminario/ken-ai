@@ -27,15 +27,13 @@ body {
 }
 
 header {
-    background: linear-gradient(to bottom, rgb(248, 248, 248), rgb(248, 248, 248) 80%, transparent);
-    height: 64px;
+    background: linear-gradient(to bottom, rgb(247, 247, 247) 80%, transparent);
+    height: 80px;
     position: fixed;
-    top: 0;
     width: 100%;
-    z-index: 30;
 
     @media (min-width: 1080px) {
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 0%, transparent);
+        background: none
     }
 }
 
@@ -117,7 +115,11 @@ img {
     width: 32px;
 
     &:hover {
-        opacity: .7;
+        opacity: .8;
+    }
+
+    @media (max-width: 640px) {
+        left: 16px;
     }
 }
 
@@ -126,20 +128,31 @@ img {
     left: 64px;
     position: absolute;
     user-select: none;
+
+    @media (max-width: 640px) {
+        display: none;
+    }
 }
 
-.user-icon {
-    background-color: rgb(0, 0, 0);
-    border-radius: 50%;
+.login-button {
+    background-color: black;
+    border: none;
+    border-radius: 16px;
+    color: white;
     cursor: pointer;
-    padding: 8px;
+    font-size: 14px;
+    padding: 8px 16px;
     position: absolute;
     right: 24px;
-    top: 16px;
-    width: 38px;
+    top: 20px;
+    white-space: nowrap;
 
     &:hover {
-        opacity: .7;
+        opacity: .8;
+    }
+
+    @media (max-width: 640px) {
+        right: 16px;
     }
 }
 
