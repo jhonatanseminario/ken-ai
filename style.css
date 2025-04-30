@@ -2,7 +2,6 @@
     --font-sans: "Inter", "Roboto", system-ui, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     --font-monospace: "Roboto Mono", "Inconsolata", "Consolas", "Courier New", monospace;
 
-    overflow-y: scroll;
     scrollbar-color: rgb(0, 0, 0, 0.3) transparent;
     scrollbar-gutter: stable;
     scrollbar-width: thin;
@@ -13,7 +12,7 @@
 }
 
 body {
-    background-color: rgb(248, 248, 248);
+    background-color: rgb(247, 247, 247);
     color: rgb(48, 48, 48);
     font-family: var(--font-sans);
     font-weight: 450;
@@ -110,16 +109,23 @@ img {
 
 .logo {
     cursor: pointer;
-    left: 32px;
+    left: 24px;
     opacity: 1;
     position: absolute;
     top: 20px;
     transition: opacity 0.3s ease;
-    width: 64px;
+    width: 32px;
 
     &:hover {
         opacity: .7;
     }
+}
+
+.text-logo {
+    font-size: 24px;
+    left: 64px;
+    position: absolute;
+    user-select: none;
 }
 
 .user-icon {
@@ -128,7 +134,7 @@ img {
     cursor: pointer;
     padding: 8px;
     position: absolute;
-    right: 32px;
+    right: 24px;
     top: 16px;
     width: 38px;
 
