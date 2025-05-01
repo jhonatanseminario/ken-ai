@@ -31,6 +31,7 @@ header {
     height: 80px;
     position: fixed;
     width: 100%;
+    z-index: 30;
 
     @media (min-width: 1080px) {
         background: none
@@ -108,14 +109,14 @@ img {
 .logo {
     cursor: pointer;
     left: 24px;
-    opacity: 1;
+    opacity: .8;
     position: absolute;
     top: 20px;
     transition: opacity 0.3s ease;
     width: 32px;
 
     &:hover {
-        opacity: .8;
+        opacity: 1;
     }
 
     @media (max-width: 640px) {
@@ -167,7 +168,7 @@ img {
 
 .text-primary {
     color: rgb(0, 0, 0);
-    font-weight: 600;
+    font-weight: 500;
     transform: translateY(-800%);
 }
 
@@ -179,6 +180,8 @@ img {
 
 .text-primary,
 .text-secondary {
+    white-space: nowrap;
+
     @media (max-width: 640px) {
         font-size: 24px;
         letter-spacing: 0;
@@ -189,12 +192,12 @@ img {
     line-height: 28px;
     margin-inline: auto;
     max-width: 800px;
-    padding: 40px 28px 220px;
+    padding: 48px 28px 220px;
 }
 
 .user-message-bubble {
     background-color: rgb(255, 255, 255);
-    border-radius: 24px 24px 8px;
+    border-radius: 24px;
     border: 1px solid rgb(232, 232, 232);
     margin-block: 32px;
     margin-left: auto;
@@ -267,27 +270,30 @@ img {
 }
 
 .message-input-container {
+    border-radius: 14px;
+    border: 1px solid rgb(232, 232, 232);
     bottom: 48px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1);
     left: 0;
     margin-inline: auto;
     max-width: 800px;
-    padding-inline: 8px;
     position: fixed;
     right: 0;
     z-index: 20;
 }
 
 .message-input {
-    border-radius: 24px;
-    border: 1px solid rgb(232, 232, 232);
-    box-shadow: 0 2px 8px rgb(0, 0, 0, 0.03);
+    border: none;
+    border-top-right-radius: 14px;
+    border-top-left-radius: 14px;
     field-sizing: content;
     font-family: inherit;
     font-size: 16px;
+    font-weight: 450;
     letter-spacing: inherit;
     line-height: inherit;
-    max-height: 340px;
-    min-height: 120px;
+    max-height: 144px;
+    min-height: 60px;
     padding: 20px;
     resize: none;
     scrollbar-color: rgb(0, 0, 0, 0.3) transparent;
@@ -295,24 +301,20 @@ img {
     transition: border 0.3s ease;
     width: 100%;
 
-    &:hover {
-        border: 1px solid rgb(208, 208, 208);
-    }
-
     &:focus {
-        border: 1px solid rgb(168, 168, 168);
         outline: none;
     }
 
     &::placeholder {
         font-family: inherit;
+        font-weight: inherit;
         letter-spacing: inherit;
     }
 }
 
 .message-input-container.centered {
     bottom: auto;
-    max-height: 184px;
+    max-height: fit-content;
     top: 50%;
     transform: translateY(-50%);
 
@@ -323,16 +325,25 @@ img {
     }
 }
 
+.options-container {
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+    background-color: rgb(255, 255, 255);
+    height: 56px;
+    margin-top: -8px;
+    padding: 8px;
+}
+
 .input-btn {
     background-color: rgb(0, 0, 0);
     border: none;
     border-radius: 50%;
-    bottom: 14px;
+    bottom: 8px;
     color: rgb(255, 255, 255);
     cursor: pointer;
     height: 36px;
     position: absolute;
-    right: 16px;
+    right: 8px;
     width: 36px;
     transition: transform 0.3s ease;
 
@@ -403,7 +414,7 @@ img {
     background: rgb(248 248 248);
     bottom: 0px;
     font-size: 12px;
-    height: 175px;
+    height: 169px;
     left: 0;
     margin-inline: auto;
     padding-top: 120px;
