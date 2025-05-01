@@ -3,6 +3,7 @@ import * as smd from "./smd.js";
 const textPrimary = document.querySelector('.text-primary');
 const textSecondary = document.querySelector('.text-secondary');
 const logo = document.querySelector('#logo');
+const textLogo = document.querySelector('.text-logo');
 const chatArea = document.querySelector('#chat-area');
 const userMessageInput = document.querySelector('#user-message-input');
 const messageInputContainer = document.querySelector('.message-input-container');
@@ -118,6 +119,25 @@ logo.addEventListener('click', () => {
     chatHistory = [];
 });
 
+textLogo.addEventListener('click', () => {
+    chatArea.innerHTML = '';
+    stopGenerating = true;
+
+    inputButton.classList.add('send-btn');
+    inputButton.disabled = true;
+    updateButtonImage();
+
+    textPrimary.removeAttribute('hidden');
+    textSecondary.removeAttribute('hidden');
+
+    messageInputContainer.classList.add('centered');
+    userMessageInput.value = '';
+    userMessageInput.focus();
+
+    scrollButton.classList.remove("visible");
+
+    chatHistory = [];
+});
 
 async function processUserMessage (event) {
 

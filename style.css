@@ -109,7 +109,7 @@ img {
 .logo {
     cursor: pointer;
     left: 24px;
-    opacity: .8;
+    opacity: .75;
     position: absolute;
     top: 20px;
     transition: opacity 0.3s ease;
@@ -117,6 +117,10 @@ img {
 
     &:hover {
         opacity: 1;
+
+        & ~ p {
+            opacity: 1;
+        }
     }
 
     @media (max-width: 640px) {
@@ -125,10 +129,22 @@ img {
 }
 
 .text-logo {
+    align-content: center;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    height: 32px;
     font-size: 24px;
-    left: 64px;
+    left: 56px;
+    margin-top: 20px;
+    opacity: .75;
+    padding-left: 8px;
     position: absolute;
+    transition: opacity 0.3s ease;
     user-select: none;
+
+    &:hover {
+        opacity: 1;
+    }
 
     @media (max-width: 640px) {
         display: none;
@@ -146,6 +162,7 @@ img {
     position: absolute;
     right: 24px;
     top: 20px;
+    transition: opacity 0.3s ease;
     white-space: nowrap;
 
     &:hover {
@@ -159,7 +176,7 @@ img {
 
 .heading {
     font-size: 30px;
-    letter-spacing: .5px;
+    letter-spacing: .75px;
     position: fixed;
     text-align: center;
     top: 50%;
@@ -168,13 +185,13 @@ img {
 
 .text-primary {
     color: rgb(0, 0, 0);
-    font-weight: 500;
+    font-weight: 400;
     transform: translateY(-800%);
 }
 
 .text-secondary {
     font-weight: 400;
-    opacity: .8;
+    opacity: .75;
     transform: translateY(-670%);
 }
 
