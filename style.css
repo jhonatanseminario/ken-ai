@@ -176,7 +176,7 @@ img {
 
 .heading {
     font-size: 30px;
-    letter-spacing: .75px;
+    letter-spacing: .25px;
     position: fixed;
     text-align: center;
     top: 50%;
@@ -185,12 +185,12 @@ img {
 
 .text-primary {
     color: rgb(0, 0, 0);
-    font-weight: 400;
+    font-weight: 450;
     transform: translateY(-800%);
 }
 
 .text-secondary {
-    font-weight: 400;
+    font-weight: 450;
     opacity: .75;
     transform: translateY(-670%);
 }
@@ -438,13 +438,17 @@ img {
     position: fixed;
     right: 0;
     text-align: center;
+    white-space: nowrap;
     width: 100%;
     z-index: 10;
+
+    @media (max-width: 640px) {
+        font-size: 10px;
+    }
 }
 
 .profile-link {
     color: rgb(0, 0, 0);
-    font-weight: 550;
     text-decoration: none;
 }
 
