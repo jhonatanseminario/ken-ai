@@ -287,6 +287,7 @@ img {
 }
 
 .message-input-container {
+    background-color: rgb(255, 255, 255);
     border-radius: 14px;
     border: 1px solid rgb(232, 232, 232);
     bottom: 32px;
@@ -294,6 +295,7 @@ img {
     left: 16px;
     margin-inline: auto;
     max-width: 800px;
+    padding: 16px;
     position: fixed;
     right: 16px;
     z-index: 20;
@@ -301,20 +303,16 @@ img {
 
 .message-input {
     border: none;
-    border-top-right-radius: 14px;
-    border-top-left-radius: 14px;
     field-sizing: content;
     font-family: inherit;
     font-size: 16px;
-    font-weight: 450;
     letter-spacing: inherit;
     line-height: inherit;
-    max-height: 144px;
-    min-height: 60px;
-    padding: 20px;
+    max-height: 120px;
+    min-height: 40px;
+    padding: 8px 12px 8px 8px;
     resize: none;
     scrollbar-color: rgb(0, 0, 0, 0.3) transparent;
-    scrollbar-width: thin;
     transition: border 0.3s ease;
     width: 100%;
 
@@ -346,42 +344,45 @@ img {
     border-bottom-right-radius: 14px;
     border-bottom-left-radius: 14px;
     background-color: rgb(255, 255, 255);
-    height: 53px;
-    margin-top: -8px;
-    padding: 8px;
+    height: 36px;
+    margin-top: 4px;
 }
 
 .input-btn {
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(16, 16, 16);
     border: none;
-    border-radius: 50%;
-    bottom: 8px;
+    border-radius: 8px;
+    bottom: 16px;
     color: rgb(255, 255, 255);
     cursor: pointer;
     height: 36px;
     position: absolute;
-    right: 8px;
+    right: 16px;
     width: 36px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 
     &:hover {
-        transform: scale(1.1);
+        background-color: rgb(32, 32, 32);
     }
 
     &:active {
-        transform: scale(.9);
+        background-color: rgb(24, 24, 24);
     }
 
     &:disabled {
-        cursor: default;
-        opacity: 0.4;
+        cursor: not-allowed;
+        background-color: rgb(240, 240, 240);
 
         &:hover {
-            transform: scale(1);
+            background-color: rgb(240, 240, 240);
         }
     
         &:active {
-            transform: scale(1);
+            background-color: rgb(240, 240, 240);
+        }
+
+        & img {
+            filter: contrast(0);
         }
     }
 
