@@ -147,6 +147,36 @@ export function attr_to_html_attr(type) {
 }
 
 /**
+ * @param   {number} level
+ * @returns {Token } */
+export const level_to_heading = (level) => {
+    switch (level) {
+    case 1:  return HEADING_1
+    case 2:  return HEADING_2
+    case 3:  return HEADING_3
+    case 4:  return HEADING_4
+    case 5:  return HEADING_5
+    default: return HEADING_6
+    }
+}
+export const heading_from_level = level_to_heading
+
+/**
+ * @param   {Token} token
+ * @returns {number} */
+export const heading_to_level = (token) => {
+    switch (token) {
+    case HEADING_1: return 1
+    case HEADING_2: return 2
+    case HEADING_3: return 3
+    case HEADING_4: return 4
+    case HEADING_5: return 5
+    case HEADING_6: return 6
+    default:        return 0
+    }
+}
+
+/**
  * @typedef  {object      } Parser
  * @property {Any_Renderer} renderer        - {@link Renderer} interface
  * @property {string      } text            - Text to be added to the last token in the next flush
@@ -303,6 +333,33 @@ function end_tokens_to_len(p, len) {
 }
 
 /**
+ * @param   {Parser} p
+ * @param   {number} indent
+ * @returns {number} */
+function end_tokens_to_indent(p, indent) {
+
+    let idx = 0
+    for (let i = 0; i <= p.len; i += 1) {
+        indent -= p.spaces[i]
+        if (indent < 0) {
+            break   
+        }
+        switch (p.tokens[i]) {
+        case CODE_BLOCK:
+        case CODE_FENCE:
+        case BLOCKQUOTE:
+        case LIST_ITEM:
+            idx = i
+            break
+        }
+    }
+
+    while (p.len > idx) {end_token(p)}
+    
+    return indent
+}
+
+/**
  * @param   {Parser } p
  * @param   {Token  } list_token
  * @returns {boolean} added a new list */
@@ -428,16 +485,9 @@ export function parser_write(p, chunk) {
                 p.indent_len += 4
                 continue
             }
-
-            let indent = p.indent_len
-            for (let i = 0; i <= p.len; i += 1) {
-                indent -= p.spaces[i]
-                if (indent < 0) {
-                    end_tokens_to_len(p, i-1)
-                    break
-                }
-            }
-
+            
+            let indent = end_tokens_to_indent(p, p.indent_len)
+            
             p.indent_len = 0
             p.token = p.tokens[p.len]
 
@@ -485,6 +535,7 @@ export function parser_write(p, chunk) {
                 */
                 if (p.tokens[p.len] === LIST_ITEM && p.token === LINE_BREAK) {
                     end_token(p)
+                    clear_root_pending(p)
                     p.pending = char
                     continue
                 }
@@ -493,6 +544,7 @@ export function parser_write(p, chunk) {
                  And ignore newlines in root
                 */
                 end_tokens_to_len(p, p.blockquote_idx)
+                clear_root_pending(p)
                 p.blockquote_idx = 0
                 p.fence_start = 0
                 p.pending = char
@@ -507,15 +559,10 @@ export function parser_write(p, chunk) {
                     }
                     break // fail
                 case ' ':
-                    switch (p.pending.length) {
-                    case 1: add_token(p, HEADING_1); clear_root_pending(p); continue
-                    case 2: add_token(p, HEADING_2); clear_root_pending(p); continue
-                    case 3: add_token(p, HEADING_3); clear_root_pending(p); continue
-                    case 4: add_token(p, HEADING_4); clear_root_pending(p); continue
-                    case 5: add_token(p, HEADING_5); clear_root_pending(p); continue
-                    case 6: add_token(p, HEADING_6); clear_root_pending(p); continue
-                    }
-                    console.assert(false, "Should not reach here")
+                    end_tokens_to_indent(p, p.indent_len)
+                    add_token(p, heading_from_level(p.pending.length))
+                    clear_root_pending(p)
+                    continue
                 }
                 break // fail
             /* Blockquote */
@@ -562,9 +609,10 @@ export function parser_write(p, chunk) {
                         continue
                     case '\n':
                         if (p.hr_chars < 3) break
+                        end_tokens_to_indent(p, p.indent_len)
                         p.renderer.add_token(p.renderer.data, RULE)
                         p.renderer.end_token(p.renderer.data)
-                        p.pending = ""
+                        clear_root_pending(p)
                         p.hr_chars = 0
                         continue
                     }
@@ -621,10 +669,12 @@ export function parser_write(p, chunk) {
                         parser_write(p, pending_with_char)
                     }
                     continue
-                case '\n':
+                case '\n': {
                     /*  ```lang\n
                                 ^
                     */
+                    end_tokens_to_indent(p, p.indent_len)
+        
                     add_token(p, CODE_FENCE)
                     if (p.pending.length > p.fence_start) {
                         p.renderer.set_attr(p.renderer.data, LANG, p.pending.slice(p.fence_start))
@@ -632,6 +682,7 @@ export function parser_write(p, chunk) {
                     clear_root_pending(p)
                     p.token = NEWLINE
                     continue
+                }
                 default:
                     /*  ```lang\n
                             ^
@@ -676,6 +727,8 @@ export function parser_write(p, chunk) {
                 break // fail
             /* Table */
             case '|':
+                end_tokens_to_len(p, p.blockquote_idx)
+
                 add_token(p, TABLE)
                 add_token(p, TABLE_ROW)
 
@@ -687,9 +740,8 @@ export function parser_write(p, chunk) {
 
             let to_write = pending_with_char
 
-            /* Add line break */
+            /* Add a line break and continue in previous token */
             if (p.token === LINE_BREAK) {
-                /* Add a line break and continue in previous token */
                 p.token = p.tokens[p.len]
                 p.renderer.add_token(p.renderer.data, LINE_BREAK)
                 p.renderer.end_token(p.renderer.data)
@@ -1192,10 +1244,23 @@ export function parser_write(p, chunk) {
             }
         /* Newline */
         case '\n':
-            if (p.token !== IMAGE &&
-                p.token !== EQUATION_BLOCK &&
-                p.token !== EQUATION_INLINE
-            ) {
+            switch (p.token) {
+            case IMAGE:
+            case EQUATION_BLOCK:
+            case EQUATION_INLINE:
+                break
+            case HEADING_1:
+            case HEADING_2:
+            case HEADING_3:
+            case HEADING_4:
+            case HEADING_5:
+            case HEADING_6:
+                add_text(p)
+                end_tokens_to_len(p, p.blockquote_idx)
+                p.blockquote_idx = 0
+                p.pending = char
+                continue
+            default:
                 add_text(p)
                 p.pending = char
                 p.token = LINE_BREAK
