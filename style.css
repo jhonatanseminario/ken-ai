@@ -66,7 +66,7 @@ code {
     border-radius: 4px;
     color: rgb(32, 32, 32);
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 500;
     padding: 2px 6px;
     white-space: pre-wrap;
     word-break: break-word;
@@ -211,7 +211,7 @@ img {
     line-height: 26px;
     margin-inline: auto;
     max-width: 800px;
-    padding: 48px 28px 220px;
+    padding: 48px 32px 220px;
 }
 
 .user-message-bubble {
@@ -396,36 +396,37 @@ img {
 .scroll-btn {
     background-color: rgb(255, 255, 255);
     border-radius: 50%;
-    border: 1px solid rgba(5, 5, 5, 0.1);
+    border: 1px solid rgba(64, 64, 64, 0.2);
     cursor: pointer;
-    opacity: 0;
+    height: 32px;
     padding-left: 4px;
     pointer-events: none;
     position: absolute;
-    right: 8px;
-    top: -42px;
-    transform: translateY(10px);
-    transition: opacity 0.1s ease, transform 0.1s ease;
+    right: 50%;
+    top: -48px;
+    transform: translateX(50%) scale(0);
+    transition:transform 0.2s ease;
     width: 32px;
 
     &:hover {
-        background-color: rgb(5, 5, 5, .04);
+        filter: brightness(0.98);
+    }
 
-        & img {
-            filter: contrast(4);
-        }
+    &:active {
+        filter: brightness(0.96);
     }
 
     & img {
+        filter: brightness(.5);
         height: 24px;
         padding-top: 2px;
+        transform: rotate(180deg) translateY(-2px);
     } 
 }
 
 .scroll-btn.visible {
-    opacity: 1;
     pointer-events: auto;
-    transform: translateY(0);
+    transform: translateX(50%) scale(1);
 }
 
 .hidden-bottom {
