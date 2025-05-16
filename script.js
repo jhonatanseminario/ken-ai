@@ -199,7 +199,7 @@ async function fetchServerResponse (userMessage, chatHistory) {
     const thinkingBubble = document.createElement('div');
 
     thinkingBubble.classList.add('thinking-message');
-    thinkingBubble.textContent = 'Pensando...';
+    thinkingBubble.textContent = '...';
     chatArea.appendChild(thinkingBubble);
 
         window.scrollTo({

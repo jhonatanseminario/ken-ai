@@ -231,20 +231,20 @@ img {
 
 .thinking-message {
     color: #666;
-    font-style: italic;
-    margin-bottom: 16px;
-    animation: pulse 1.2s ease-in-out infinite;
+    font-size: 32px;
+    user-select: none;
+    animation: pulse 1.5s ease-in-out infinite;
 }
 
 @keyframes pulse {
     0% {
-        opacity: 0.4;
+        opacity: 0.3;
     }
     50% {
         opacity: 1;
     }
     100% {
-        opacity: 0.4;
+        opacity: 0.3;
     }
 }
 
@@ -255,7 +255,7 @@ img {
 .animation {
     opacity: 0;
     filter: blur(2px);
-    animation: fadeIn .3s forwards;
+    animation: fadeIn .4s forwards;
 }
 
 @keyframes fadeIn {
