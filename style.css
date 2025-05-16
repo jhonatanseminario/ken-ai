@@ -35,14 +35,23 @@ header {
     z-index: 30;
 }
 
+p {
+    margin: 20px 0px 10px;
+}
+
 strong {
     color: rgb(16, 16, 16);
     font-weight: 600;
 }
 
+ol,
+ul {
+    padding-left: 32px;
+}
+
 li {
     margin-block: 16px;
-    padding-left: 8px;
+    padding-left: 6px;
 }
 
 li pre code {
@@ -486,4 +495,8 @@ td {
 
 tr:last-child td {
     border-bottom: none;
+}
+
+::marker {
+    color: rgb(128, 128, 128);
 }
