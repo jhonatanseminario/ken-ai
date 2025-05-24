@@ -81,6 +81,15 @@ code {
     word-break: break-word;
 }
 
+code[class^="language-"] {
+    background-color: rgb(253, 253, 253);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.04);
+    color: rgb(64, 64, 64);
+    overflow-x: auto;
+    padding: 48px 16px 16px;
+    white-space: pre;
+}
+
 pre code {
     border-radius: 8px;
     border: 1px solid rgb(220, 220, 220);
@@ -98,6 +107,7 @@ pre code {
 
 pre code.hljs {
     background-color: rgb(253, 253, 253);
+    box-shadow : 0px 1px 2px rgba(0, 0, 0, 0.04);
     color: rgb(64, 64, 64);
     padding: 48px 16px 16px;
     position: relative;
@@ -473,10 +483,11 @@ img {
 .table-wrapper {
     background-color: rgb(255, 255, 255);
     border-radius: 8px;
-    border: 1px solid rgb(216, 216, 216);
+    border: 1px solid rgb(220, 220, 220);
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.04);
+    margin-top: 20px;
     overflow-x: auto;
-    scrollbar-color: rgb(0 0 0 / 20%) rgba(255, 255, 255, 0);
+    scrollbar-color: rgb(225 225 225) transparent;
     scrollbar-width: thin;
 }
 
@@ -486,18 +497,18 @@ table {
 }
 
 th {
-    border-bottom: 3px solid rgb(232, 232, 232);
+    background-color: rgb(245, 245, 245);
     font-size: 14px;
     min-width: 200px;
-    padding: 8px 24px;
+    padding: 8px 12px;
     text-align: left;
     white-space: nowrap;
 }
 
 td {
-    border-bottom: 3px solid rgb(244, 244, 244);
+    border-bottom: 1px solid rgb(235, 235, 235);
     font-size: 14px;
-    padding: 8px 24px;
+    padding: 8px 12px;
 }
 
 tr:last-child td {
