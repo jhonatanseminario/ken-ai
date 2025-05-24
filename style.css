@@ -231,7 +231,7 @@ img {
     line-height: 26px;
     margin-inline: auto;
     max-width: 800px;
-    padding: 48px 32px 204px;
+    padding: 48px 32px 256px;
 }
 
 .user-message-bubble {
@@ -270,6 +270,7 @@ img {
 
 .model-message-bubble {
     margin-block: 24px;
+    min-height: 26px;
 }
 
 .animation {
