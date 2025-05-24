@@ -291,17 +291,20 @@ async function fetchServerResponse (userMessage, chatHistory) {
                         if (!pre.querySelector('.copy-button')) {
                             const copyButton = document.createElement('button');
 
-                            copyButton.textContent = 'Copiar';
+                            copyButton.innerHTML = '<img src="./assets/icons/copy-icon.svg" alt="Copiar">';
+                            copyButton.title = 'Copiar'; 
                             copyButton.classList.add('copy-button');
 
                             pre.appendChild(copyButton);
 
                             copyButton.addEventListener('click', () => {
                                 navigator.clipboard.writeText(block.textContent);
-                                copyButton.textContent = '✔ Copiado';
+                                copyButton.innerHTML = '<img src="./assets/icons/check-icon.svg" alt="Copiado">';
+                                copyButton.title = 'Copiado';
                                     
                                 setTimeout(() => {
-                                    copyButton.textContent = 'Copiar';
+                                    copyButton.innerHTML = '<img src="./assets/icons/copy-icon.svg" alt="Copiar">';
+                                    copyButton.title = 'Copiar';
                                 }, 2000);
                             });
                         }

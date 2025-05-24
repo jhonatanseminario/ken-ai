@@ -83,7 +83,7 @@ code {
 
 pre code {
     border-radius: 8px;
-    border: 1px solid rgb(225, 225, 225);
+    border: 1px solid rgb(220, 220, 220);
     display: block;
     font-family: var(--font-monospace);
     font-size: 14px;
@@ -97,7 +97,8 @@ pre code {
 }
 
 pre code.hljs {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(253, 253, 253);
+    color: rgb(64, 64, 64);
     padding: 48px 16px 16px;
     position: relative;
     white-space: pre;
@@ -291,9 +292,15 @@ img {
 
 .copy-button {
     cursor: pointer;
-    right: 28px;
+    right: 14px;
     font-weight: 600;
     font-family: var(--font-sans);
+
+    & img {
+        filter: contrast(0.25);
+        height: 100%;
+        width: 16px;
+    }
 }
 
 .message-input-container {
